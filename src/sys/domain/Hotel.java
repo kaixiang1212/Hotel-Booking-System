@@ -1,7 +1,6 @@
 package sys.domain;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 
 /**
@@ -30,21 +29,21 @@ public class Hotel {
 	 * @param type1
 	 * @return
 	 */
-	public boolean isAvailable (LocalDate date, Period days, int type1) {
+	public boolean isAvailable (LocalDate date, int days, int type1) {
 		if (getAvailableRoom(date, days, type1) != null) return true;
 		else return false;
 	}	
-	public boolean isAvailable (LocalDate date, Period days, int type1, int type2) {
+	public boolean isAvailable (LocalDate date, int days, int type1, int type2) {
 		return isAvailable(date, days, type1) &&
 				isAvailable(date, days, type2);
 	}
 	
-	public boolean isAvailable (LocalDate date, Period days, int type1, int type2, int type3) {
+	public boolean isAvailable (LocalDate date, int days, int type1, int type2, int type3) {
 		return isAvailable(date, days, type1, type2) &&
 				isAvailable(date, days, type3);
 	}
 	
-	public Room getAvailableRoom(LocalDate date, Period days, int type) {
+	public Room getAvailableRoom(LocalDate date, int days, int type) {
 		for (Room room : Rooms) {
 			if (room.getType() == type && !room.isBooked(date, days)) {
 				return room;

@@ -1,14 +1,10 @@
 package sys.domain;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.text.AttributedString;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.print.DocFlavor.INPUT_STREAM;
 
 /**
  * @author KaiXiang
@@ -29,7 +25,7 @@ public class HotelBookingSystem {
 		return hotel;
 	}
 	
-	public void newBooking(String customerName, LocalDate date, Period days, int roomType) {
+	public void newBooking(String customerName, LocalDate date, int days, int roomType) {
 		//Booking booking = new Booking(customerName, room, days, date);
 		//this.Bookings.add(booking);
 	}
@@ -69,6 +65,14 @@ public class HotelBookingSystem {
 	public static void main (String[] args) {
 		HotelBookingSystem sys = new HotelBookingSystem();
 		Scanner sc = null;
+		String date = "2016-08-16";
+		//default, ISO_LOCAL_DATE
+        LocalDate localDate = LocalDate.parse(date);
+		System.out.println(localDate.format(DateTimeFormatter.ofPattern("MMM d")));
+
+		
+		
+		
 		try {
 			sc = new Scanner(System.in);    // args[0] is the first command line argument
 			// Read input from the scanner here
@@ -80,8 +84,8 @@ public class HotelBookingSystem {
 				case "Hotel":
 					if (!sys.isUsedHotelName(input[1])) sys.newHotel(input[1]);
 					hotel = sys.getHotel(input[1]);
-					hotel.addRoom(input[2], Integer.parseInt(input[3]));
-					
+					//hotel.addRoom(input[2], Integer.parseInt(input[3]));
+
 					System.out.println(hotel);
 					break;
 				case "Booking":

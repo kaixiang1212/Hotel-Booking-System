@@ -1,7 +1,7 @@
 package sys.domain;
 
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author kxy12
@@ -10,23 +10,23 @@ import java.time.Period;
 public class Booking {
 	private String customerName;
 	private Room room;
-	private Period days;
+	private int days;
 	private LocalDate startDate;
 	private LocalDate endDate;
 
-	protected Booking(String name, Room rm, Period days, LocalDate startDate) {
+	protected Booking(String name, Room rm, int days, LocalDate startDate) {
 		this.customerName = name;
 		this.room = rm;
 		this.days = days;
 		this.startDate = startDate;
-		this.endDate = this.startDate.plus(days);
+		this.endDate = this.startDate.plusDays(days);
 	}
 
-	private LocalDate computeEndDate(LocalDate date, Period period) {
-		return date.plus(period);
+	private LocalDate computeEndDate(LocalDate date, int period) {
+		return date.plusDays(period);
 	}
 
-	protected boolean hasOverlaps(LocalDate starts, Period period) {
+	protected boolean hasOverlaps(LocalDate starts, int period) {
 		LocalDate ends = computeEndDate(starts, period);
 		if (this.startDate.isBefore(starts) && this.endDate.isBefore(ends)) {
 			return false;
@@ -67,14 +67,14 @@ public class Booking {
 	/**
 	 * @return the days
 	 */
-	public Period getDays() {
+	public int getDays() {
 		return days;
 	}
 
 	/**
 	 * @param days the days to set
 	 */
-	public void setDays(Period days) {
+	public void setDays(int days) {
 		this.days = days;
 	}
 
@@ -111,7 +111,7 @@ public class Booking {
 	 */
 	@Override
 	public String toString() {
-		return getRoom().getHotelName() + " " + startDate.getMonth();
+		return getRoom().getHotelName() + " " + startDate.format(DateTimeFormatter.ofPattern("MMM d"));
 	}
 	
 

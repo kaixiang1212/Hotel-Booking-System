@@ -1,7 +1,6 @@
 package sys.domain;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 
 /**
@@ -22,9 +21,9 @@ public class Room {
 		this.bookings = new ArrayList<Booking>();
 	}
 
-	public boolean isBooked(LocalDate date, Period period) {
+	public boolean isBooked(LocalDate date, int days) {
 		for(Booking b : this.bookings) {
-			if (b.hasOverlaps(date, period))
+			if (b.hasOverlaps(date, days))
 				return true;
 		}
 		return false;
