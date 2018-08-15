@@ -3,10 +3,10 @@
  */
 package sys.test;
 
-import sys.domain.Booking;
-import sys.domain.CapacityType;
-import sys.domain.Hotel;
-import sys.domain.HotelBookingSystem;
+import assn1.Booking;
+import assn1.CapacityType;
+import assn1.Hotel;
+import assn1.HotelBookingSystem;
 
 /**
  * @author kxy12
