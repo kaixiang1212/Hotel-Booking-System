@@ -2,6 +2,7 @@ package assn1;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * @author kxy12
@@ -44,6 +45,11 @@ public class Room {
 	 */
 	public void addBooking(Booking booking) {
 		bookings.add(booking);
+		bookings.sort(new Comparator<Booking>() {
+			public int compare(Booking b1, Booking b2) {
+				return b1.getStartDate().compareTo(b2.getStartDate());
+			}
+		});
 	}
 
 	/**
@@ -71,7 +77,7 @@ public class Room {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getRoomNo() + " ");
 		for (Booking b : bookings) {
-			sb.append(b + "\n");
+			sb.append(b + " ");
 		}
 		return sb.toString();
 	}

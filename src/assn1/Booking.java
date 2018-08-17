@@ -5,6 +5,7 @@ package assn1;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * @author kxy12
@@ -15,31 +16,16 @@ public class Booking {
 	private LocalDate startDate;
 	private int days;
 	private LocalDate endDate;
-	private Room room;
-	
-	public Booking(String customerName, LocalDate startDate, int days, Room room) {
+	private ArrayList<Room> rooms;
+
+	public Booking(String customerName, LocalDate startDate, int days) {
 		this.customerName = customerName;
 		this.startDate = startDate;
 		this.days = days;
 		this.endDate = startDate.plusDays(days);
-		this.room = room;
-	}
-	
-	/**
-	 * @return the room
-	 */
-	public Room getRoom() {
-		return room;
+		this.rooms = new ArrayList<Room>();
 	}
 
-	public boolean inBetweenDates(LocalDate starts, int days) {
-		LocalDate ends = startDate.plusDays(days);
-		if (ends.isBefore(startDate) || starts.isAfter(endDate) || ends.equals(startDate)) {
-			return false;
-		}
-		return true;
-	}
-	
 	/**
 	 * @return the customerName
 	 */
@@ -64,14 +50,32 @@ public class Booking {
 	public LocalDate getEndDate() {
 		return endDate;
 	}
-	
+
 	public String getMonthDate() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL d");
 		return startDate.format(formatter);
 	}
-	
+
 	public boolean checkName(String name) {
 		return name.equals(customerName);
+	}
+	
+	public void addRoom(Room room) {
+		this.rooms.add(room);
+	}
+	
+	public void removeRoom(Room room) {
+		this.rooms.remove(room);
+	}
+	
+	public ArrayList<Room> getRooms(){
+		return this.rooms;
+	}
+	
+	public boolean inBetweenDates(LocalDate starts, int days) {
+		LocalDate ends = starts.plusDays(days);
+		if (startDate.isAfter(ends) || endDate.isBefore(starts) || endDate.equals(starts) || ends.equals(startDate)) return false;
+		return true;
 	}
 
 	/* (non-Javadoc)

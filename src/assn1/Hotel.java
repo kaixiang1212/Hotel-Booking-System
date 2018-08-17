@@ -2,6 +2,7 @@ package assn1;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author kxy12
@@ -29,14 +30,36 @@ public class Hotel {
 	 * @return true if this hotel has vacancy
 	 */
 	public boolean hasVacancy(LocalDate date, int days, int type, int quantity) {
+		if (quantity == 0) return true;
 		int quantityAvailable = 0;
 		for(Room e : rooms) {
-			if (e.getRoomType() == days && !e.isBooked(date, days)) {
+			if (e.getRoomType() == type && !e.isBooked(date, days)) {
 				quantityAvailable++;
 			}
 		}
 		if (quantityAvailable >= quantity) return true;
 		return false;
+	}
+
+	/**
+	 * Get the rooms available for booking
+	 * @param date
+	 * @param days
+	 * @param type
+	 * @return
+	 */
+	public ArrayList<Room> getAvailableRoom(LocalDate date, int days, int[] type) {
+		ArrayList<Room> rooms = new ArrayList<Room>();
+
+		int[] typeLeft = Arrays.copyOf(type, 3);
+
+		for (Room e : this.rooms) {
+			if (!e.isBooked(date, days) && typeLeft[e.getRoomType()-1] != 0) {
+				rooms.add(e);
+				typeLeft[e.getRoomType()-1]--;
+			}
+		}
+		return rooms;
 	}
 
 	/**
