@@ -1,7 +1,7 @@
 /**
  * 
  */
-package assn1;
+package ass1;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
