@@ -17,16 +17,16 @@ public class Hotel {
 		rooms = new ArrayList<Room>();
 	}
 
-	public void newRoom(String roomNo, String roomType) {
+	public void newRoom(String roomNo, int roomType) {
 		rooms.add(new Room(this, roomNo, roomType));
 	}
 
 	/**
 	 * 
-	 * @param date
-	 * @param days
-	 * @param type
-	 * @param quantity
+	 * @param date Date to check vacancy
+	 * @param days Days to check vacancy
+	 * @param type Type to check vacancy 1:single ...
+	 * @param quantity Quantity of the room type "type" to check vacancy
 	 * @return true if this hotel has vacancy
 	 */
 	public boolean hasVacancy(LocalDate date, int days, int type, int quantity) {
@@ -43,10 +43,10 @@ public class Hotel {
 
 	/**
 	 * Get the rooms available for booking
-	 * @param date
-	 * @param days
-	 * @param type
-	 * @return
+	 * @param date Date to book
+	 * @param days Days to book
+	 * @param type Types and Quantity to book
+	 * @return Array of room which is !booked
 	 */
 	public ArrayList<Room> getAvailableRoom(LocalDate date, int days, int[] type) {
 		ArrayList<Room> rooms = new ArrayList<Room>();

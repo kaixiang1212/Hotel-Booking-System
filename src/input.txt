@@ -1,13 +1,15 @@
-Hotel Surfers 101 2
-Hotel Surfers 102 2
-Hotel Surfers 103 1
-Hotel Burleigh 101 2
-Booking Aarthi Jan 25 2 single 1 double 1
-Booking Rob Jan 24 4 double 1
-Booking Stephanie Jan 26 1 double 1
-Change Aarthi Jan 27 3 single 1
-Booking Gary Jan 25 2 single 1
-Cancel Stephanie
-Booking Hussein Jan 26 1 single 1
-Print Surfers
+Hotel Python 101 2
+Hotel Python 102 3
+Hotel Python 103 1
+Hotel Java 201 2
+Hotel Java 202 2
+Booking Kai Aug 10 3 single 1 double 1
+Booking Get Aug 10 3 single 1 double 2
+Booking HD Aug 10 3 triple 1
+Change HD Aug 10 3 double 2
+Change HD Aug 7 2 single 1
+Booking anyone Aug 8 3 single 1
+Print Python
+Print Java
+
 

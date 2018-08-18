@@ -15,65 +15,77 @@ public class Booking {
 	private String customerName;
 	private LocalDate startDate;
 	private int days;
-	private LocalDate endDate;
 	private ArrayList<Room> rooms;
 
 	public Booking(String customerName, LocalDate startDate, int days) {
 		this.customerName = customerName;
 		this.startDate = startDate;
 		this.days = days;
-		this.endDate = startDate.plusDays(days);
 		this.rooms = new ArrayList<Room>();
 	}
 
 	/**
-	 * @return the customerName
+	 * @return Name of customer under the booking
 	 */
 	public String getCustomerName() {
 		return customerName;
 	}
+
 	/**
-	 * @return the startDate
+	 * @return Start date of the booking
 	 */
 	public LocalDate getStartDate() {
 		return startDate;
 	}
+
 	/**
-	 * @return the days
+	 * @return Length of days on this booking
 	 */
 	public int getDays() {
 		return days;
 	}
 
 	/**
-	 * @return the endDate
+	 * @return Month Date Days as a formatted string
 	 */
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-
 	public String getMonthDay() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL d");
 		return startDate.format(formatter) + " " + getDays();
 	}
 
+	/**
+	 * 
+	 * @param name Customer name
+	 * @return True if the given name matches the booking's name
+	 */
 	public boolean checkName(String name) {
 		return name.equals(customerName);
 	}
 
+	/**
+	 * Add room to the list of booking
+	 * @param room to add to the booking
+	 */
 	public void addRoom(Room room) {
 		this.rooms.add(room);
 	}
 
-	public void removeRoom(Room room) {
-		this.rooms.remove(room);
-	}
-
+	/**
+	 * 
+	 * @return a list of rooms under this booking
+	 */
 	public ArrayList<Room> getRooms(){
 		return this.rooms;
 	}
 	
+	/**
+	 * Check if the given period crashes the booking's period
+	 * @param starts Start date to check
+	 * @param days Length of days to check
+	 * @return True if the given date crashes with the booking's date, false otherwise
+	 */
 	public boolean inBetweenDates(LocalDate starts, int days) {
+		LocalDate endDate = startDate.plusDays(days);
 		LocalDate ends = starts.plusDays(days);
 		if (startDate.isAfter(ends) || endDate.isBefore(starts) || endDate.equals(starts) || ends.equals(startDate)) return false;
 		return true;

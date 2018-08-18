@@ -2,7 +2,6 @@ package ass1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,19 +23,19 @@ public class HotelBookingSystem {
 
 	/**
 	 * Instantiate New Hotel
-	 * @param hotelName
-	 * @return
+	 * @param hotelName Name of the hotel
+	 * @return Newly created hotel object with name = hotelName
 	 */
 	public Hotel newHotel(String hotelName) {
 		Hotel hotel = new Hotel(hotelName);
 		hotels.add(hotel);
 		return hotel;
 	}
-	
+
 	/**
 	 * return hotel with matching name
-	 * @param hotelName
-	 * @return Hotel object
+	 * @param hotelName Name of the hotel
+	 * @return Hotel object with matching name from the system
 	 */
 	public Hotel getHotel(String hotelName) {
 		for (Hotel e : hotels) {
@@ -47,11 +46,13 @@ public class HotelBookingSystem {
 	}
 
 	/**
-	 * return the hotel that has vacancy
-	 * @param input
-	 * @return
+	 * get the hotel with available vacancy
+	 * @param date date to check vacancy
+	 * @param days staying period
+	 * @param type roomType int[0]:single,int[1]:double,int[3]:triple
+	 * @return null if no hotel has vacancy, return the hotel otherwise
 	 */
-	public Hotel hasVacancy(LocalDate date, int days, int[] type) {
+	public Hotel vacancy(LocalDate date, int days, int[] type) {
 
 		for (Hotel e : hotels) {
 			int typeMet = 0;
@@ -64,16 +65,18 @@ public class HotelBookingSystem {
 	}
 	
 	/**
-	 * Create new booking with the inputs
-	 * @param hotel
-	 * @param name
-	 * @param date
-	 * @param days
-	 * @param roomsToBook
-	 * @return Booking Created
+	 * 
+	 * @param name Name under the booking
+	 * @param date Start date to book
+	 * @param days Number of days to book
+	 * @param type Types of room and quantity requested
+	 * @return The booking with give details
 	 */
-	public Booking newBooking(Hotel hotel,String name, LocalDate date, int days, ArrayList<Room> roomsToBook) {
+	public Booking newBooking(String name, LocalDate date, int days, int[] type) {
+		Hotel hotel = vacancy(date, days, type);
+		if (hotel == null) return null;
 		Booking booking = new Booking(name, date, days);
+		ArrayList<Room> roomsToBook = hotel.getAvailableRoom(date, days, type);
 		for (Room e : roomsToBook) {
 			e.addBooking(booking);
 			booking.addRoom(e);
@@ -84,19 +87,22 @@ public class HotelBookingSystem {
 	}
 
 	/**
-	 * get the booking under the name
-	 * @param name
-	 * @return booking under the name 
+	 * Get the booking under the name
+	 * @param name Customer Name
+	 * @return Booking under the name "name"
 	 */
-	public Booking getBookingWithName(String name) {
+	public Booking getBooking(String name) {
 		for (Booking b : this.bookings) {
-			if (name.equals(b.getCustomerName())) return b;
+			if (b.checkName(name)) return b;
 		}
 		return null;
 	}
 
-	public Booking suspendBooking(String name) {
-		Booking booking = getBookingWithName(name);
+	/**
+	 * Suspend the booking
+	 * @param booking booking request to suspend
+	 */
+	public void suspendBooking(Booking booking) {
 		if (booking == null) {
 			System.out.println("Booking not Found");
 		}
@@ -104,33 +110,25 @@ public class HotelBookingSystem {
 		for (Room e : booking.getRooms()) {
 			e.removeBooking(booking);
 		}
-		return booking;
 	}
 
-	public void resumeBooking(Booking booking) {
+	/**
+	 * Reverted the suspended booking
+	 * @param booking Suspended booking to revert
+	 */
+	public void revertBooking(Booking booking) {
 		this.bookings.add(booking);
 		for (Room e : booking.getRooms()) {
 			e.addBooking(booking);
 		}
 	}
-	
-	/**
-	 * determine request types
-	 * @param input
-	 * @return number of type of room requested
-	 */
-	public int requestType(String[] input) {
-		if (input.length == 7) return 1;
-		if (input.length == 9) return 2;
-		if (input.length == 11) return 3;
-		return 0;
-	}
+
 	/**
 	 * create LocalDate object with extract from input
-	 * @param input
-	 * @return
+	 * @param input input seperated by " "
+	 * @return LocalDate object 
 	 */
-	public LocalDate extractDate(String[] input) {
+	private LocalDate extractDate(String[] input) {
 		String dateString = input[3]+input[2]+"2018";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dMMMyyyy");
 		LocalDate date = LocalDate.parse(dateString, formatter);
@@ -139,10 +137,10 @@ public class HotelBookingSystem {
 
 	/**
 	 * extract type of room requested from raw input
-	 * @param input
-	 * @return
+	 * @param input input seperated by " "
+	 * @return array of quantity requested for 3 types of rooms
 	 */
-	public int[] extractType(String[] input) {
+	private int[] extractType(String[] input) {
 		int[] type = new int[3];
 		for (int i=0;i<input.length;i++) {
 			if (input[i].equals("single")) {
@@ -158,9 +156,8 @@ public class HotelBookingSystem {
 
 	/**
 	 * 
-	 * Main Function
+	 * @param args Arguments
 	 */
-
 	public static void main (String[] args) {
 		HotelBookingSystem sys = new HotelBookingSystem();
 		Scanner sc = null;
@@ -185,7 +182,7 @@ public class HotelBookingSystem {
 				case "Hotel":
 					hotel = sys.getHotel(input[1]);
 					if (hotel == null) hotel = sys.newHotel(input[1]);
-					hotel.newRoom(input[2], input[3]);
+					hotel.newRoom(input[2], Integer.parseInt(input[3]));
 					break;
 
 				case "Booking":
@@ -194,14 +191,12 @@ public class HotelBookingSystem {
 					days = Integer.parseInt(input[4]);
 					type = sys.extractType(input);
 
-					// check possible
-					hotel = sys.hasVacancy(date, days, type);
+					booking = sys.newBooking(name, date, days, type);
 					//  Make Booking;
-					if (hotel == null) {
+					if (booking == null) {
 						System.out.println("Booking rejected");
 						break;
 					}
-					booking = sys.newBooking(hotel, name, date, days, hotel.getAvailableRoom(date, days, type));
 					System.out.println("Booking " + booking);
 					break;
 
@@ -210,23 +205,23 @@ public class HotelBookingSystem {
 					date = sys.extractDate(input);
 					days = Integer.parseInt(input[4]);
 					type = sys.extractType(input);
-					Booking oldBooking = sys.suspendBooking(name);
-					hotel = sys.hasVacancy(date, days, type);
-					if (hotel == null) {
-						// Reactivate oldBooking
-						sys.resumeBooking(oldBooking);
+					Booking oldBooking = sys.getBooking(name);
+					sys.suspendBooking(oldBooking);
+					booking = sys.newBooking(name, date, days, type);
+					if (booking == null) {
+						// revert old booking
+						sys.revertBooking(oldBooking);
 						System.out.println("Change rejected");
 						break;
 					}
-					booking = sys.newBooking(hotel, name, date, days, hotel.getAvailableRoom(date, days, type));
 					System.out.println("Change " + booking);
-
 					break;
 
 				case "Cancel":
 					// remove all bookings with name
 					name = input[1];
-					sys.suspendBooking(name);
+					booking = sys.getBooking(name);
+					sys.suspendBooking(booking);
 					System.out.println("Cancel " + name);
 					break;
 

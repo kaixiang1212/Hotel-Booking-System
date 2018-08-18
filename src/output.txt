@@ -1,12 +1,13 @@
-Booking Aarthi Surfers 101 103
-Booking Rob Surfers 102
-Booking Stephanie Burleigh 101
-Change Aarthi Surfers 103
-Booking Gary Surfers 103
-Cancel Stephanie
+Booking Kai Python 101 103
 Booking rejected
-Surfers 101
-Surfers 102 Jan 24 4
-Surfers 103 Jan 25 2 Jan 27 3
+Booking HD Python 102
+Change HD Java 201 202
+Change HD Python 103
+Booking rejected
+Python 101 Aug 10 3
+Python 102
+Python 103 Aug 7 2 Aug 10 3
+Java 201
+Java 202
 
 

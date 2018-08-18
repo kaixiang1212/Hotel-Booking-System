@@ -14,22 +14,22 @@ public class Room {
 	private ArrayList<Booking> bookings;
 	private int roomType;
 
-	public Room(Hotel hotel, String roomNo, String roomType) {
+	public Room(Hotel hotel, String roomNo, int roomType) {
 		this.roomNo = roomNo;
 		this.bookings = new ArrayList<Booking>();
-		this.roomType = Integer.parseInt(roomType);
+		this.roomType = roomType;
 		this.hotel = hotel;
 	}
 
 	/**
-	 * @return the roomType
+	 * @return return 1:single, 2:double, 3:triple
 	 */
 	public int getRoomType() {
 		return roomType;
 	}
 
 	/**
-	 * @return the roomNo
+	 * @return Room Number
 	 */
 	public String getRoomNo() {
 		return roomNo;
@@ -41,14 +41,14 @@ public class Room {
 	}
 
 	/**
-	 * @return the list of bookings
+	 * @return List of bookings
 	 */
 	public ArrayList<Booking> getBookings() {
 		return bookings;
 	}
 
 	/**
-	 * @param Booking
+	 * @param booking Booking to add to the list
 	 */
 	public void addBooking(Booking booking) {
 		bookings.add(booking);
@@ -60,15 +60,18 @@ public class Room {
 	}
 
 	/**
-	 * remove booking from the list
-	 * @param booking
+	 * Remove booking from the list
+	 * @param booking Booking to remove from the list
 	 */
 	public void removeBooking(Booking booking) {
 		bookings.remove(booking);
 	}
 
 	/**
-	 * @return true if room is booked within a period
+	 * 
+	 * @param startDate Date to check availability
+	 * @param days Days to check availability
+	 * @return True if room is booked within a period, false otherwise
 	 */
 	public boolean isBooked(LocalDate startDate, int days) {
 		for (Booking e : bookings) {
@@ -83,7 +86,7 @@ public class Room {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getRoomNo());
-		for (Booking b : bookings) {
+		for (Booking b : getBookings()) {
 			sb.append(" " + b.getMonthDay());
 		}
 		return sb.toString();
