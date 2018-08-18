@@ -1,5 +1,7 @@
 package assn1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -95,12 +97,29 @@ public class HotelBookingSystem {
 	
 	public void cancelBooking(String name) {
 		Booking booking = getBookingWithName(name);
+		if (booking == null) return;
+		this.bookings.remove(booking);
+		for (Room e : booking.getRooms()) {
+			e.removeBooking(booking);
+		}
+	}
+	
+	public Booking suspendBooking(String name) {
+		Booking booking = getBookingWithName(name);
 		if (booking == null) {
 			System.out.println("Booking not Found");
 		}
 		this.bookings.remove(booking);
 		for (Room e : booking.getRooms()) {
 			e.removeBooking(booking);
+		}
+		return booking;
+	}
+	
+	public void resumeBooking(Booking booking) {
+		this.bookings.add(booking);
+		for (Room e : booking.getRooms()) {
+			e.addBooking(booking);
 		}
 	}
 	
@@ -163,7 +182,7 @@ public class HotelBookingSystem {
 		Booking booking;
 
 		try {
-			sc = new Scanner(System.in);    // args[0] is the first command line argument
+			sc = new Scanner(new File(args[0]));    // args[0] is the first command line argument
 			// Read input from the scanner here
 			while (sc.hasNextLine()) {
 				String str = sc.nextLine();
@@ -196,13 +215,28 @@ public class HotelBookingSystem {
 					break;
 
 				case "Change":
-					// 
+					name = input[1];
+					date = sys.extractDate(input);
+					days = Integer.parseInt(input[4]);
+					type = sys.extractType(input);
+					Booking oldBooking = sys.suspendBooking(name);
+					hotel = sys.hasVacancy(date, days, type);
+					if (hotel == null) {
+						// Reactivate oldBooking
+						sys.resumeBooking(oldBooking);
+						System.out.println("Change rejected");
+						break;
+					}
+					booking = sys.newBooking(hotel, name, date, days, hotel.getAvailableRoom(date, days, type));
+					System.out.println("Change " + booking);
+
 					break;
 
 				case "Cancel":
 					// remove all bookings with name
 					name = input[1];
 					sys.cancelBooking(name);
+					System.out.println("Cancel " + name);
 					break;
 
 				case "Print":
@@ -214,6 +248,10 @@ public class HotelBookingSystem {
 				}
 			}
 		}
+		catch (FileNotFoundException e)
+	      {
+	          System.out.println(e.getMessage());
+	      }
 		finally
 		{
 			System.out.println("\n");

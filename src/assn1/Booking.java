@@ -85,9 +85,9 @@ public class Booking {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getCustomerName() + " " + rooms.get(0).getHotelName() + " ");
+		sb.append(getCustomerName() + " " + rooms.get(0).getHotelName());
 		for (Room e : rooms) {
-			sb.append(e.getRoomNo() + " ");
+			sb.append(" " + e.getRoomNo());
 		}
 		return sb.toString();
 	}
