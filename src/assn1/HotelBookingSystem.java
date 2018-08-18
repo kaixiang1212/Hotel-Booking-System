@@ -94,16 +94,7 @@ public class HotelBookingSystem {
 		}
 		return null;
 	}
-	
-	public void cancelBooking(String name) {
-		Booking booking = getBookingWithName(name);
-		if (booking == null) return;
-		this.bookings.remove(booking);
-		for (Room e : booking.getRooms()) {
-			e.removeBooking(booking);
-		}
-	}
-	
+
 	public Booking suspendBooking(String name) {
 		Booking booking = getBookingWithName(name);
 		if (booking == null) {
@@ -115,7 +106,7 @@ public class HotelBookingSystem {
 		}
 		return booking;
 	}
-	
+
 	public void resumeBooking(Booking booking) {
 		this.bookings.add(booking);
 		for (Room e : booking.getRooms()) {
@@ -235,7 +226,7 @@ public class HotelBookingSystem {
 				case "Cancel":
 					// remove all bookings with name
 					name = input[1];
-					sys.cancelBooking(name);
+					sys.suspendBooking(name);
 					System.out.println("Cancel " + name);
 					break;
 
