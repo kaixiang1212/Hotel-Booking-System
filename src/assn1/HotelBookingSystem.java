@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 /**
  * @author kxy12
  *
@@ -44,18 +45,6 @@ public class HotelBookingSystem {
 	}
 
 	/**
-	 * Check if the hotel is already created
-	 * @param hotelName
-	 * @return
-	 */
-	public boolean inHotels(String hotelName) {
-		for (Hotel hotel : hotels) {
-			if (hotelName.equals(hotel.getHotelName())) return true;
-		}
-		return false;
-	}
-
-	/**
 	 * return the hotel that has vacancy
 	 * @param input
 	 * @return
@@ -82,17 +71,13 @@ public class HotelBookingSystem {
 	 * @return Booking Created
 	 */
 	public Booking newBooking(Hotel hotel,String name, LocalDate date, int days, ArrayList<Room> roomsToBook) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Booking " + name + " " + hotel.getHotelName() + " ");
 		Booking booking = new Booking(name, date, days);
 		for (Room e : roomsToBook) {
 			e.addBooking(booking);
 			booking.addRoom(e);
-			sb.append(e.getRoomNo() + " ");
 		}
-		
+
 		this.bookings.add(booking);
-		System.out.println(sb.toString());
 		return booking;
 	}
 
@@ -118,8 +103,6 @@ public class HotelBookingSystem {
 			e.removeBooking(booking);
 		}
 	}
-
-	
 	
 	/**
 	 * determine request types
@@ -142,15 +125,6 @@ public class HotelBookingSystem {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dMMMyyyy");
 		LocalDate date = LocalDate.parse(dateString, formatter);
 		return date;
-	}
-	
-	/**
-	 * extract days from raw input
-	 * @param input
-	 * @return
-	 */
-	public int extractDays(String[] input) {
-		return Integer.parseInt(input[4]);
 	}
 
 	/**
@@ -186,6 +160,7 @@ public class HotelBookingSystem {
 		String name;
 		int days;
 		int[] type;
+		Booking booking;
 
 		try {
 			sc = new Scanner(System.in);    // args[0] is the first command line argument
@@ -198,16 +173,15 @@ public class HotelBookingSystem {
 				switch (input[0]) {
 				
 				case "Hotel":
-					if (!sys.inHotels(input[1])) hotel = sys.newHotel(input[1]);
-					else hotel = sys.getHotel(input[1]);
-
+					hotel = sys.getHotel(input[1]);
+					if (hotel == null) hotel = sys.newHotel(input[1]);
 					hotel.newRoom(input[2], input[3]);
 					break;
 
 				case "Booking":
 					name = input[1];
 					date = sys.extractDate(input);
-					days = sys.extractDays(input);
+					days = Integer.parseInt(input[4]);
 					type = sys.extractType(input);
 
 					// check possible
@@ -217,13 +191,12 @@ public class HotelBookingSystem {
 						System.out.println("Booking rejected");
 						break;
 					}
-					ArrayList<Room> roomToBook = hotel.getAvailableRoom(date, days, type);
-					sys.newBooking(hotel, name, date, days, roomToBook);
+					booking = sys.newBooking(hotel, name, date, days, hotel.getAvailableRoom(date, days, type));
+					System.out.println("Booking " + booking);
 					break;
 
 				case "Change":
-					// if possible change then Sys.out
-					// else Sys.out reject
+					// 
 					break;
 
 				case "Cancel":

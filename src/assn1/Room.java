@@ -9,14 +9,16 @@ import java.util.Comparator;
  *
  */
 public class Room {
+	private Hotel hotel;
 	private String roomNo;
 	private ArrayList<Booking> bookings;
 	private int roomType;
 
-	public Room(String roomNo, String roomType) {
+	public Room(Hotel hotel, String roomNo, String roomType) {
 		this.roomNo = roomNo;
 		this.bookings = new ArrayList<Booking>();
 		this.roomType = Integer.parseInt(roomType);
+		this.hotel = hotel;
 	}
 
 	/**
@@ -31,6 +33,11 @@ public class Room {
 	 */
 	public String getRoomNo() {
 		return roomNo;
+	}
+
+
+	public String getHotelName() {
+		return hotel.getHotelName();
 	}
 
 	/**
@@ -75,9 +82,9 @@ public class Room {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getRoomNo() + " ");
+		sb.append(getRoomNo());
 		for (Booking b : bookings) {
-			sb.append(b + " ");
+			sb.append(" " + b.getMonthDay());
 		}
 		return sb.toString();
 	}

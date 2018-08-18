@@ -41,9 +41,10 @@ public class Booking {
 	/**
 	 * @return the days
 	 */
-	int getDays() {
+	public int getDays() {
 		return days;
 	}
+
 	/**
 	 * @return the endDate
 	 */
@@ -51,23 +52,23 @@ public class Booking {
 		return endDate;
 	}
 
-	public String getMonthDate() {
+	public String getMonthDay() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL d");
-		return startDate.format(formatter);
+		return startDate.format(formatter) + " " + getDays();
 	}
 
 	public boolean checkName(String name) {
 		return name.equals(customerName);
 	}
-	
+
 	public void addRoom(Room room) {
 		this.rooms.add(room);
 	}
-	
+
 	public void removeRoom(Room room) {
 		this.rooms.remove(room);
 	}
-	
+
 	public ArrayList<Room> getRooms(){
 		return this.rooms;
 	}
@@ -83,7 +84,12 @@ public class Booking {
 	 */
 	@Override
 	public String toString() {
-		return getMonthDate() + " " + getDays();
+		StringBuilder sb = new StringBuilder();
+		sb.append(getCustomerName() + " " + rooms.get(0).getHotelName() + " ");
+		for (Room e : rooms) {
+			sb.append(e.getRoomNo() + " ");
+		}
+		return sb.toString();
 	}
 
 

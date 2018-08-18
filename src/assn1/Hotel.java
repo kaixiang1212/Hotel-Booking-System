@@ -18,7 +18,7 @@ public class Hotel {
 	}
 
 	public void newRoom(String roomNo, String roomType) {
-		rooms.add(new Room(roomNo, roomType));
+		rooms.add(new Room(this, roomNo, roomType));
 	}
 
 	/**
