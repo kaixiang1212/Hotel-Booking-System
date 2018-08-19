@@ -49,7 +49,7 @@ public class Booking {
 	 * @return Month Date Days as a formatted string
 	 */
 	public String getMonthDay() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL d");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d");
 		return startDate.format(formatter) + " " + getDays();
 	}
 

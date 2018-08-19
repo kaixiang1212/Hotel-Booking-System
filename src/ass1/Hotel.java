@@ -16,7 +16,12 @@ public class Hotel {
 		this.hotelName = hotelName;
 		rooms = new ArrayList<Room>();
 	}
-
+	
+	/**
+	 * Create a new Room
+	 * @param roomNo Room Number
+	 * @param roomType Room capacity : 1/2/3
+	 */
 	public void newRoom(String roomNo, int roomType) {
 		rooms.add(new Room(this, roomNo, roomType));
 	}
