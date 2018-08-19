@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.print.CancelablePrintJob;
+
 
 /**
  * @author kxy12
@@ -206,6 +208,10 @@ public class HotelBookingSystem {
 					days = Integer.parseInt(input[4]);
 					type = sys.extractType(input);
 					Booking oldBooking = sys.getBooking(name);
+					if (oldBooking == null) {
+						System.out.println("Change rejected");
+						break;
+					}
 					sys.suspendBooking(oldBooking);
 					booking = sys.newBooking(name, date, days, type);
 					if (booking == null) {
@@ -221,6 +227,10 @@ public class HotelBookingSystem {
 					// remove all bookings with name
 					name = input[1];
 					booking = sys.getBooking(name);
+					if (booking == null) {
+						System.out.println("Cancel rejected");
+						break;
+					}
 					sys.suspendBooking(booking);
 					System.out.println("Cancel " + name);
 					break;
@@ -240,7 +250,6 @@ public class HotelBookingSystem {
 	      }
 		finally
 		{
-			System.out.println("\n");
 			if (sc != null) sc.close();
 		}
 	}

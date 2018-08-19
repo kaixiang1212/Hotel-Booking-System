@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 /**
  * @author kxy12
  *
@@ -84,10 +86,11 @@ public class Booking {
 	 * @param days Length of days to check
 	 * @return True if the given date crashes with the booking's date, false otherwise
 	 */
-	public boolean inBetweenDates(LocalDate starts, int days) {
-		LocalDate endDate = startDate.plusDays(days);
-		LocalDate ends = starts.plusDays(days);
-		if (startDate.isAfter(ends) || endDate.isBefore(starts) || endDate.equals(starts) || ends.equals(startDate)) return false;
+	public boolean inBetweenDates(LocalDate compareStart, int days) {
+		LocalDate endDate = startDate.plusDays(this.days);
+		LocalDate compareEnd = compareStart.plusDays(days);
+		if (compareEnd.isBefore(startDate) || compareStart.isAfter(endDate)) return false;
+		if (compareEnd.isEqual(startDate) || compareStart.isEqual(endDate)) return false;
 		return true;
 	}
 
