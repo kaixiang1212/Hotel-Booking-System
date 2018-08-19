@@ -7,9 +7,16 @@ Booking Anotherone Aye 101 201
 Change Anotherone Aye 101 201 202
 Change Burden Aye 201 202
 Change Someone Bee 1001
-Cancel Someone
 Aye 101 Jul 29 1
 Aye 201 Jul 29 1 Dec 12 1
 Aye 102
 Aye 202 Jul 29 1 Dec 12 1
+Bee 1001 Aug 10 3
+Cancel Someone
+Cancel Burden
+Cancel Anotherone
+Aye 101
+Aye 201
+Aye 102
+Aye 202
 Bee 1001

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @author kxy12
+ * @author Kai Xiang Yong (z5175681)
  * 
  */
 public class Hotel {

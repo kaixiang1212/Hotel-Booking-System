@@ -1,3 +1,4 @@
+# Testing Cancel and other functions
 Hotel Aye 101 1
 Hotel Aye 201 2
 Hotel Aye 102 1
@@ -12,6 +13,10 @@ Booking Anotherone Aug 10 3 single 1 double 1
 Change Anotherone Jul 29 1 single 1 double 2
 Change Burden Dec 12 1 singe 2 double 2
 Change Someone Aug 10 3 triple 1
+Print Aye
+Print Bee
 Cancel Someone
+Cancel Burden
+Cancel Anotherone
 Print Aye
 Print Bee

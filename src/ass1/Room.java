@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * @author kxy12
+ * @author Kai Xiang Yong (z5175681)
  *
  */
 public class Room {
@@ -35,7 +35,10 @@ public class Room {
 		return roomNo;
 	}
 
-
+	/**
+	 * Get the name of hotel
+	 * @return hotel name of this hotel
+	 */
 	public String getHotelName() {
 		return hotel.getHotelName();
 	}

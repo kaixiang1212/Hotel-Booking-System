@@ -7,10 +7,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 /**
- * @author kxy12
+ * @author Kai Xiang Yong (z5175681)
  *
  */
 public class Booking {

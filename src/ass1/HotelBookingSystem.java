@@ -7,11 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.print.CancelablePrintJob;
-
 
 /**
- * @author kxy12
+ * @author Kai Xiang Yong (z5175681)
  *
  */
 public class HotelBookingSystem {
@@ -67,7 +65,7 @@ public class HotelBookingSystem {
 	}
 	
 	/**
-	 * 
+	 * Make a new bookings with date, days, types of requested
 	 * @param name Name under the booking
 	 * @param date Start date to book
 	 * @param days Number of days to book
