@@ -1,1 +1,1 @@
-# HotelBookingSys
+# Hotel Booking System
